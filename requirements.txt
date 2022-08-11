@@ -5,4 +5,5 @@ urllib3==1.26.4
 black==22.3.0
 flake8==4.0.1
 pylint==2.14.3
+pre-commit==2.19.0
 drf-spectacular==0.22.1
