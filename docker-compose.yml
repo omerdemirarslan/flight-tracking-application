@@ -1,0 +1,29 @@
+version: '3.9'
+
+volumes:
+  flight-tracking-application-local-postgres: {}
+
+services:
+  flight-tracking:
+    container_name: flight-tracking
+    build:
+      context: .
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - postgres
+    command: /start-sh
+
+  postgres:
+    image: postgres:13
+    container_name: flight-tracking-application-local-postgres
+    volumes:
+      - flight-tracking-application-local-postgres:/var/lib/postgresql/data:Z
+    env_file:
+      - .env
+    ports:
+      - "6432:5432"
