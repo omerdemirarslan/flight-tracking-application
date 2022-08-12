@@ -77,13 +77,13 @@ $ http://localhost:8000/
 #### Move To Test API With Swagger Interface
 
 ```shell
-$ http://localhost:8000/
+$ http://0.0.0.0:8000/api/v1/docs/
 ```
 
 #### Test Project
 
 ```shell
-$ docker-compose run --rm unittest
+$ docker-compose run --rm flight-tracking ./manage.py test --pattern="test_*.py"
 ```
 ---
 
@@ -121,13 +121,11 @@ $ python3.9 -m venv flight_tracking_app
 $ source flight_tracking_app/bin/activate
 ```
 
-
 #### Install the requirements
 
 ```shell
 $ pip install -r requirements.txt
 ```
-
 
 #### Create Your Models
 
@@ -135,24 +133,23 @@ $ pip install -r requirements.txt
 $ python manage.py migrate
 ```
 
-
 #### Run project
 
 ```shell
 $ python manage.py runserver 0.0.0.0:8000
 ```
 
+#### Move To Home Page
 
 ```shell
 $ http://localhost:8000/
 ```
 
-#### Test Project
+#### Move To Test API With Swagger Interface
 
 ```shell
-$ docker-compose run --rm unittest
+$ http://0.0.0.0:8000/api/v1/docs/
 ```
----
 
 #### Test Project
 

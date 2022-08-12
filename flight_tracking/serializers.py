@@ -1,13 +1,16 @@
 from rest_framework.serializers import (
-    ModelSerializer, IntegerField, CharField, RelatedField, ValidationError, DateTimeField
+    ModelSerializer,
+    IntegerField,
+    CharField,
+    RelatedField,
+    ValidationError,
+    DateTimeField,
 )
 
 from flight_tracking.models import Flight, Airport
 
 
 class AirportSerializer(ModelSerializer):
-    """ Airport Serializer Class """
-
     id = IntegerField(read_only=True)
     code = CharField(required=True)
     name = CharField(required=True)
@@ -18,8 +21,6 @@ class AirportSerializer(ModelSerializer):
 
 
 class AirportCodeField(RelatedField):
-    """ Airport Code Model Field Control """
-
     def to_internal_value(self, code: str) -> object:
         """
         This Method Controls Is There Airport By Code
@@ -29,12 +30,11 @@ class AirportCodeField(RelatedField):
         airport_instance = Airport.objects.filter(code=code).first()
 
         if not airport_instance:
-            message = 'There is no airport exist code by %s'
+            message = "There is no airport exist code by %s"
 
             raise ValidationError(message % code.__name__)
 
         return airport_instance
-
 
     def to_representation(self, value) -> object:
         """
@@ -57,6 +57,4 @@ class FlightSerializer(ModelSerializer):
         fields = ["id", "flight_number", "take_off", "landing", "to", "from"]
 
 
-FlightSerializer._declared_fields["from"] = AirportCodeField(
-    source="location", queryset=Airport.objects.none()
-)
+FlightSerializer._declared_fields["from"] = AirportCodeField(source="location", queryset=Airport.objects.none())

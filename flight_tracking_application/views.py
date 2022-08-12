@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 
 from .helpers.messages import HOME_PAGE
+from flight_tracking.models import *
 
 
 def home_page_view(request):
@@ -9,4 +10,4 @@ def home_page_view(request):
     :param request:
     :return:
     """
-    return HttpResponse(HOME_PAGE, content_type='text/plain')
+    return HttpResponse(HOME_PAGE, content_type="text/plain")
