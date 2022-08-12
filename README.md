@@ -44,7 +44,7 @@ We are use pre-commit on this project. You have to set pre-commit for before con
 
 ### Docker way:
 
-#### Example .env file content:
+#### 1- Copy Example .env file content:
 
 * POSTGRES_DB=flight_tracking_app
 * POSTGRES_HOST=postgres
@@ -53,39 +53,41 @@ We are use pre-commit on this project. You have to set pre-commit for before con
 * POSTGRES_PORT=5432
 
 
-#### Command Steps
+#### 2- Command Steps
 
 ```shell
 $ docker-compose build
 $ docker-compose up
 ```
 
-#### Single Command
+#### 3- Single Command
 
 ```shell
 $ docker-compose up  --build
 ```
 
 
-#### Move To Home Page
+#### 4- Visit To Home Page
 
 ```shell
 $ http://localhost:8000/
 ```
 
 
-#### Move To Test API With Swagger Interface
+#### 5- Visit To Test API With Swagger Interface
 
 ```shell
 $ http://0.0.0.0:8000/api/v1/docs/
 ```
 
-#### Test Project
+#### 6- Run All Test for Project
 
 ```shell
-$ docker-compose run --rm flight-tracking ./manage.py test --pattern="test_*.py"
+$ docker-compose run --rm flight-tracking ./manage.py test
 ```
 ---
+
+#### 7- Add Data Source In the Database Management
 
 ```text
 You can add the database source in your IDE database management or other database interface.
@@ -96,64 +98,5 @@ Port: 6432 # Because Docker use 5432 default port in base postgresql but It need
 Database: flight_tracking_app
 User: captain
 Password: 007007
-```
-
-### Local Environment Way
-
-#### Create database in your local device. Like: **flight_tracking_app**
-
-* For command line check this: [Postgresql](https://www.postgresql.org/docs/13/tutorial-createdb.html)
-* The other way is PgAdmin Interface. Check this:
-[PgAdmin](https://www.postgresqltutorial.com/postgresql-administration/postgresql-create-database/)
-
-#### Example .env file content:
-
-* POSTGRES_DB=flight_tracking_app
-* POSTGRES_HOST=localhost
-* POSTGRES_USER=postgres # General default username.
-* POSTGRES_PASSWORD= "your password"
-* POSTGRES_PORT=5432 # Local default port.
-
-
-#### Create virtual environment & activate it
-```shell
-$ python3.9 -m venv flight_tracking_app
-$ source flight_tracking_app/bin/activate
-```
-
-#### Install the requirements
-
-```shell
-$ pip install -r requirements.txt
-```
-
-#### Create Your Models
-
-```shell
-$ python manage.py migrate
-```
-
-#### Run project
-
-```shell
-$ python manage.py runserver 0.0.0.0:8000
-```
-
-#### Move To Home Page
-
-```shell
-$ http://localhost:8000/
-```
-
-#### Move To Test API With Swagger Interface
-
-```shell
-$ http://0.0.0.0:8000/api/v1/docs/
-```
-
-#### Test Project
-
-```shell
-python -m unittest
 ```
 ---
