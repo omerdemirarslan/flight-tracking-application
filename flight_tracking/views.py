@@ -28,7 +28,7 @@ class FlightViewSet(viewsets.ModelViewSet):
     @action(detail=False, methods=["GET"], url_name="total-flights")
     def total_flights(self, request):
         """
-
+        This Method Returns Total Flight Count By flight_number
         :param request:
         :return:
         """
