@@ -66,6 +66,20 @@ $ docker-compose up
 $ docker-compose up  --build
 ```
 
+
+#### Move To Home Page
+
+```shell
+$ http://localhost:8000/
+```
+
+
+#### Move To Test API With Swagger Interface
+
+```shell
+$ http://localhost:8000/
+```
+
 #### Test Project
 
 ```shell
@@ -128,6 +142,16 @@ $ python manage.py migrate
 $ python manage.py runserver 0.0.0.0:8000
 ```
 
+
+```shell
+$ http://localhost:8000/
+```
+
+#### Test Project
+
+```shell
+$ docker-compose run --rm unittest
+```
 ---
 
 #### Test Project

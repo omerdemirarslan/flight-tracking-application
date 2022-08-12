@@ -1,36 +1,55 @@
-from rest_framework import serializers
+from rest_framework.serializers import (
+    ModelSerializer, IntegerField, CharField, RelatedField, ValidationError, DateTimeField
+)
 
 from flight_tracking.models import Flight, Airport
 
 
-class AirportSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(read_only=True)
-    code = serializers.CharField(required=True)
-    name = serializers.CharField(required=True)
+class AirportSerializer(ModelSerializer):
+    """ Airport Serializer Class """
+
+    id = IntegerField(read_only=True)
+    code = CharField(required=True)
+    name = CharField(required=True)
 
     class Meta:
         model = Airport
         fields = ["id", "code", "name"]
 
 
-class AirportCodeField(serializers.RelatedField):
-    def to_internal_value(self, code):
-        airport = Airport.objects.filter(code=code).first()
+class AirportCodeField(RelatedField):
+    """ Airport Code Model Field Control """
 
-        if not airport:
-            raise serializers.ValidationError(f'No airport exists with code {code}')
+    def to_internal_value(self, code: str) -> object:
+        """
+        This Method Controls Is There Airport By Code
+        :param code:
+        :return: Airport First Object or Raise ValidationError Message
+        """
+        airport_instance = Airport.objects.filter(code=code).first()
 
-        return airport
+        if not airport_instance:
+            message = 'There is no airport exist code by %s'
 
-    def to_representation(self, value):
+            raise ValidationError(message % code.__name__)
+
+        return airport_instance
+
+
+    def to_representation(self, value) -> object:
+        """
+
+        :param value:
+        :return:
+        """
         return value.code
 
 
-class FlightSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(read_only=True)
-    flight_number = serializers.CharField(required=True)
-    take_off = serializers.DateTimeField(required=True)
-    landing = serializers.DateTimeField(required=True)
+class FlightSerializer(ModelSerializer):
+    id = IntegerField(read_only=True)
+    flight_number = CharField(required=True)
+    take_off = DateTimeField(required=True)
+    landing = DateTimeField(required=True)
     to = AirportCodeField(source="destination", queryset=Airport.objects.none())
 
     class Meta:
