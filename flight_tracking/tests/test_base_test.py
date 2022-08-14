@@ -13,13 +13,13 @@ class TestBaseCase(unittest.TestCase):
     def create_flight_records(self):
         self.create_airport_records()
 
-        airport_data_one, airport_data_two = Airport.objects.all()[:2]
+        airport_instance_record_one, airport_instance_record_two = Airport.objects.all()[:2]
 
         for flight in flight_data_records:
             Flight.objects.create(
                 **flight,
-                destination=airport_data_one,
-                location=airport_data_two,
+                destination=airport_instance_record_one,
+                location=airport_instance_record_two,
             )
 
     @staticmethod

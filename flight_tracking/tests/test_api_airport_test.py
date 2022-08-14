@@ -18,51 +18,49 @@ class TestAirportAPICase(APITestCase, TestBaseCase):
         airport_all_instance = Airport.objects.all().count()
 
         url = reverse("api-v1:airport-list")
-        response = self.client.get(url)
+        response = self.client.get(path=url)
         result = response.json()
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
         self.assertEqual(len(result["results"]), airport_all_instance)
 
     def test_airport_get_instance_by_pk_controls(self):
-        airport_first_instance = Airport.objects.first()
+        airport_instance_first = Airport.objects.first()
 
-        url = reverse("api-v1:airport-detail", kwargs={"pk": airport_first_instance.id})
-        response = self.client.get(url)
+        url = reverse("api-v1:airport-detail", kwargs={"pk": airport_instance_first.id})
+        response = self.client.get(path=url)
         result = response.json()
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-        self.assertEqual(result["code"], airport_first_instance.code)
-        self.assertEqual(result["name"], airport_first_instance.name)
+        self.assertEqual(result["code"], airport_instance_first.code)
+        self.assertEqual(result["name"], airport_instance_first.name)
 
     def test_airport_create_instance_controls(self):
-        url = reverse("api-v1:airport-list")
         data = {"code": "SCH", "name": "Samsun Carsamba Airport"}
-        response = self.client.post(url, data=data, format="json")
+
+        url = reverse("api-v1:airport-list")
+        response = self.client.post(path=url, data=data, format="json")
         result = response.json()
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(result["name"], "Samsun Carsamba Airport")
 
     def test_airport_update_instance_controls(self):
+        data = {"code": "TYZ"}
+
         airport_first_instance = Airport.objects.first()
 
         url = reverse("api-v1:airport-detail", kwargs={"pk": airport_first_instance.id})
-        data = {
-            "code": "TYZ",
-        }
-        response = self.client.patch(url, data=data, format="json")
+        response = self.client.patch(path=url, data=data, format="json")
         result = response.json()
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(result["code"], "TYZ")
 
     def test_airport_delete_instance_controls(self):
-        airport_instance = Airport.objects.first()
+        airport_instance_first = Airport.objects.first()
 
-        url = reverse("api-v1:airport-detail", kwargs={"pk": airport_instance.id})
-        response = self.client.delete(url)
+        url = reverse("api-v1:airport-detail", kwargs={"pk": airport_instance_first.id})
+        response = self.client.delete(path=url)
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
